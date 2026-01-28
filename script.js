@@ -62,10 +62,10 @@ function analyze(data) {
   adviceEl.textContent = advice.join(" · ") || "👍 No extra preparation needed";
 
   if (r < 20 && w < 20 && t > 5) {
-    decisionText.textContent = "✅ Yes — safe to step out.";
+    decisionText.textContent = "✅ Yes- safe to step out.";
     detailsText.textContent = "Conditions are comfortable right now.";
   } else if (r < 40) {
-    decisionText.textContent = "⚠️ Risky — consider waiting.";
+    decisionText.textContent = "⚠️ Risky- consider waiting.";
     detailsText.textContent = "Conditions may change soon.";
   } else {
     decisionText.textContent = "❌ Not worth it right now.";
