@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Should I Step Out?</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="app">
-    <h1>Should I step out right now?</h1>
-    <p class="subtitle">A simple Europe-wide weather decision tool</p>
+    <div class="top-bar">
+      <h1>Should I step out right now?</h1>
+      <button id="darkToggle" title="Toggle dark mode">🌙</button>
+    </div>
+
+    <p class="subtitle">A simple decision, not a weather dashboard</p>
 
     <button id="checkBtn">Check now</button>
 
@@ -19,9 +23,18 @@
     <div id="result" class="hidden">
       <h2 id="decision"></h2>
       <p id="details"></p>
-      <button id="shareBtn" class="share hidden">
-        Share today’s result
-      </button>
+
+      <div class="metrics">
+        <div>🌡 <span id="temp"></span>°C</div>
+        <div>💧 <span id="humidity"></span>% humidity</div>
+        <div>🌬 <span id="wind"></span> km/h wind</div>
+        <div>🌧 <span id="rain"></span>% rain chance</div>
+        <div>🫁 AQI: <span id="aqi"></span></div>
+      </div>
+
+      <div class="advice" id="advice"></div>
+
+      <button id="shareBtn" class="share hidden">Share today’s result</button>
     </div>
 
     <div class="donation">
@@ -33,7 +46,6 @@
         class="bmc-button"
         href="https://buymeacoffee.com/tokyoisliff"
         target="_blank"
-        rel="noopener noreferrer"
       >
         <img
           src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
@@ -42,10 +54,6 @@
         <span>Buy me a coffee</span>
       </a>
     </div>
-
-    <p class="footer">
-      No tracking · No cookies · Uses real-time weather data
-    </p>
   </div>
 
   <script src="script.js"></script>
