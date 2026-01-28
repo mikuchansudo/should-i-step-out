@@ -1,1 +1,99 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background: #ffffff;
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.status {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #444;
+}
+
+#result {
+  margin-top: 20px;
+}
+
+#decision {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+#details {
+  font-size: 14px;
+  color: #444;
+}
+
+.share {
+  margin-top: 15px;
+  background: #10b981;
+}
+
+.hidden {
+  display: none;
+}
+
+.donation {
+  margin-top: 30px;
+  font-size: 13px;
+  color: #555;
+}
+
+.donation a {
+  display: inline-block;
+  margin-top: 8px;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 11px;
+  color: #888;
+}
 
