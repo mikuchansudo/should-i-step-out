@@ -19,22 +19,22 @@ const timeText = document.getElementById("timeText");
 
 const darkToggle = document.getElementById("darkToggle");
 
-/* ---------------- DARK MODE ---------------- */
+/* ---------- DARK MODE ---------- */
 
 if (localStorage.getItem("dark") === "true") {
   document.body.classList.add("dark");
   darkToggle.textContent = "☀️";
 }
 
-darkToggle.addEventListener("click", () => {
+darkToggle.onclick = () => {
   const isDark = document.body.classList.toggle("dark");
   localStorage.setItem("dark", isDark);
   darkToggle.textContent = isDark ? "☀️" : "🌙";
-});
+};
 
-/* ---------------- MAIN FLOW ---------------- */
+/* ---------- MAIN ---------- */
 
-checkBtn.addEventListener("click", () => {
+checkBtn.onclick = () => {
   statusText.classList.remove("hidden");
   statusText.textContent = "Checking conditions…";
   resultBox.classList.add("hidden");
@@ -42,44 +42,77 @@ checkBtn.addEventListener("click", () => {
   navigator.geolocation.getCurrentPosition(
     pos => {
       const { latitude, longitude } = pos.coords;
-      fetchLocation(latitude, longitude);
       fetchWeather(latitude, longitude);
       fetchAQI(latitude, longitude);
+      fetchLocation(latitude, longitude);
     },
     () => {
-      statusText.textContent = "Location access denied.";
+      statusText.textContent = "Location permission denied.";
     }
   );
-});
+};
 
-/* ---------------- LOCATION ---------------- */
+/* ---------- LOCATION (ROBUST) ---------- */
 
 function fetchLocation(lat, lon) {
-  fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}`)
+  // Try Open-Meteo first
+  fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&language=en`)
     .then(r => r.json())
     .then(d => {
       const p = d.results?.[0];
-      if (!p) {
-        locationText.textContent = "Location unavailable";
-        return;
+      if (p) {
+        const place =
+          p.city ||
+          p.town ||
+          p.village ||
+          p.name ||
+          p.administrative_area;
+        if (place) {
+          locationText.textContent = `${place}, ${p.country}`;
+          return;
+        }
       }
+      // Fallback if Open-Meteo gives nothing
+      fetchLocationFallback(lat, lon);
+    })
+    .catch(() => {
+      fetchLocationFallback(lat, lon);
+    });
+}
 
-      const place =
-        p.city ||
-        p.town ||
-        p.village ||
-        p.name ||
-        p.administrative_area ||
-        "Unknown place";
+/* ---------- FALLBACK: OpenStreetMap ---------- */
 
-      locationText.textContent = `${place}, ${p.country}`;
+function fetchLocationFallback(lat, lon) {
+  fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`,
+    {
+      headers: {
+        "User-Agent": "should-i-step-out/1.0 (contact: buymeacoffee.com/tokyoisliff)"
+      }
+    }
+  )
+    .then(r => r.json())
+    .then(d => {
+      const a = d.address || {};
+      const city =
+        a.city ||
+        a.town ||
+        a.village ||
+        a.suburb ||
+        a.county;
+      const country = a.country;
+      if (city && country) {
+        locationText.textContent = `${city}, ${country}`;
+      } else {
+        locationText.textContent = "Location unavailable";
+      }
     })
     .catch(() => {
       locationText.textContent = "Location unavailable";
     });
 }
 
-/* ---------------- WEATHER ---------------- */
+/* ---------- WEATHER ---------- */
 
 function fetchWeather(lat, lon) {
   fetch(
@@ -101,16 +134,15 @@ function showWeather(data) {
   const h = data.hourly;
 
   const t = h.temperature_2m[0];
-  const hmd = h.relative_humidity_2m[0];
+  const hum = h.relative_humidity_2m[0];
   const w = h.wind_speed_10m[0];
   const r = h.precipitation_probability[0];
 
   tempEl.textContent = t;
-  humidityEl.textContent = hmd;
+  humidityEl.textContent = hum;
   windEl.textContent = w;
   rainEl.textContent = r;
 
-  /* ---- Local time formatting with timezone ---- */
   const localDate = new Date(data.current_weather.time);
   const formattedTime = new Intl.DateTimeFormat(undefined, {
     hour: "numeric",
@@ -121,7 +153,6 @@ function showWeather(data) {
 
   timeText.textContent = `Local time: ${formattedTime}`;
 
-  /* ---- Decision logic ---- */
   if (r < 20 && w < 20 && t > 5) {
     decisionText.textContent = "Yes, safe to step out.";
     detailsText.textContent = "Conditions are comfortable right now.";
@@ -133,14 +164,11 @@ function showWeather(data) {
     detailsText.textContent = "High chance of discomfort.";
   }
 
-  /* ---- Advice ---- */
   let advice = "";
   if (r > 30) advice += "Carry an umbrella. ";
   if (t < 10 || w > 25) advice += "Carry a jacket. ";
-
   adviceEl.textContent = advice || "No extra preparation needed.";
 
-  /* ---- Next 2 hours ---- */
   hourlyEl.innerHTML = "";
   for (let i = 1; i <= 2; i++) {
     hourlyEl.innerHTML +=
@@ -151,7 +179,7 @@ function showWeather(data) {
   resultBox.classList.remove("hidden");
 }
 
-/* ---------------- AQI (GLOBAL) ---------------- */
+/* ---------- AQI (GLOBAL) ---------- */
 
 function fetchAQI(lat, lon) {
   fetch(
