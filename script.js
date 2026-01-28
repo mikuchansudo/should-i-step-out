@@ -33,7 +33,7 @@ checkBtn.addEventListener("click", () => {
 });
 
 function fetchWeather(lat, lon) {
-  statusText.textContent = "Checking UK weather…";
+  statusText.textContent = "Checking weather…";
 
   const url =
     `https://api.open-meteo.com/v1/forecast` +
@@ -64,21 +64,21 @@ function analyzeWeather(data) {
     detailsText.textContent =
       "Low rain risk, manageable wind, and comfortable temperature.";
     shareMessage =
-      "Today’s verdict: ✅ Safe to step out. UK weather behaving for once.";
+      "Today’s verdict: ✅ Safe to step out. Weather behaving for once.";
   } 
   else if (rain < 40 && wind < 30) {
     decisionText.textContent = "⚠️ Risky — you might regret it.";
     detailsText.textContent =
       "Weather could change soon. Waiting a bit may help.";
     shareMessage =
-      "Today’s verdict: ⚠️ Risky to step out. Classic UK weather.";
+      "Today’s verdict: ⚠️ Risky to step out. Weather doing its thing.";
   } 
   else {
     decisionText.textContent = "❌ Not worth it right now.";
     detailsText.textContent =
       "High rain or strong wind expected.";
     shareMessage =
-      "Today’s verdict: ❌ Not worth stepping out. Proper UK weather.";
+      "Today’s verdict: ❌ Not worth stepping out.";
   }
 
   shareBtn.classList.remove("hidden");
@@ -92,4 +92,3 @@ shareBtn.addEventListener("click", () => {
     alert("Result copied to clipboard!");
   }
 });
-
