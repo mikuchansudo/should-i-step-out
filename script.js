@@ -14,8 +14,17 @@ const adviceEl = document.getElementById("advice");
 
 const darkToggle = document.getElementById("darkToggle");
 
+// Restore dark mode preference
+if (localStorage.getItem("dark") === "true") {
+  document.body.classList.add("dark");
+  darkToggle.textContent = "☀️";
+}
+
 darkToggle.onclick = () => {
   document.body.classList.toggle("dark");
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("dark", isDark);
+  darkToggle.textContent = isDark ? "☀️" : "🌙";
 };
 
 checkBtn.onclick = () => {
@@ -36,11 +45,11 @@ function fetchWeather(lat, lon) {
     `&timezone=auto`;
 
   fetch(url)
-    .then(res => res.json())
-    .then(data => analyze(data));
+    .then(r => r.json())
+    .then(showResult);
 }
 
-function analyze(data) {
+function showResult(data) {
   const t = data.hourly.temperature_2m[0];
   const h = data.hourly.relative_humidity_2m[0];
   const r = data.hourly.precipitation_probability[0];
@@ -54,21 +63,20 @@ function analyze(data) {
   aqiEl.textContent = a;
 
   let advice = [];
+  if (r > 30) advice.push("Carry an umbrella");
+  if (t < 10 || w > 25) advice.push("Carry a jacket");
+  if (a > 100) advice.push("Air quality is poor");
 
-  if (r > 30) advice.push("☔ Carry an umbrella");
-  if (t < 10 || w > 25) advice.push("🧥 Carry a jacket");
-  if (a > 100) advice.push("😷 Poor air quality");
-
-  adviceEl.textContent = advice.join(" · ") || "👍 No extra preparation needed";
+  adviceEl.textContent = advice.join(" · ") || "No extra preparation needed";
 
   if (r < 20 && w < 20 && t > 5) {
-    decisionText.textContent = "✅ Yes- safe to step out.";
+    decisionText.textContent = "Yes, safe to step out.";
     detailsText.textContent = "Conditions are comfortable right now.";
   } else if (r < 40) {
-    decisionText.textContent = "⚠️ Risky- consider waiting.";
-    detailsText.textContent = "Conditions may change soon.";
+    decisionText.textContent = "Risky, you may want to wait.";
+    detailsText.textContent = "Conditions could change soon.";
   } else {
-    decisionText.textContent = "❌ Not worth it right now.";
+    decisionText.textContent = "Not worth it right now.";
     detailsText.textContent = "High chance of discomfort.";
   }
 
