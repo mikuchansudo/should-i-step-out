@@ -41,7 +41,7 @@ function fetchWeather(lat, lon) {
     `&longitude=${lon}` +
     `&hourly=precipitation_probability,wind_speed_10m,apparent_temperature` +
     `&forecast_days=1` +
-    `&timezone=Europe/London`;
+    `&timezone=auto`;
 
   fetch(url)
     .then(res => res.json())
