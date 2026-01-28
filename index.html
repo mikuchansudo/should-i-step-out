@@ -10,7 +10,7 @@
 
   <div class="app">
     <h1>Should I step out right now?</h1>
-    <p class="subtitle">UK weather-based decision helper</p>
+    <p class="subtitle">A simple Europe-wide weather decision tool</p>
 
     <button id="checkBtn">Check now</button>
 
@@ -19,23 +19,35 @@
     <div id="result" class="hidden">
       <h2 id="decision"></h2>
       <p id="details"></p>
-      <button id="shareBtn" class="share hidden">Share today’s result</button>
+      <button id="shareBtn" class="share hidden">
+        Share today’s result
+      </button>
     </div>
 
     <div class="donation">
-      <p>
-        ☕ If this helped you decide today,  
-        you can help me buy my medicines or a coffee.
+      <p class="donation-line">
+        If this helped you decide today, you can support this project.
       </p>
-      <a href="https://www.buymeacoffee.com/YOURNAME" target="_blank">
-        Buy Me a Coffee
+
+      <a
+        class="bmc-button"
+        href="https://buymeacoffee.com/tokyoisliff"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+          alt="Buy Me a Coffee"
+        />
+        <span>Buy me a coffee</span>
       </a>
     </div>
 
-    <p class="footer">No tracking · No cookies · Uses live UK weather</p>
+    <p class="footer">
+      No tracking · No cookies · Uses real-time weather data
+    </p>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
