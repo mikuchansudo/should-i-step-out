@@ -19,7 +19,7 @@ const timeText = document.getElementById("timeText");
 
 const darkToggle = document.getElementById("darkToggle");
 
-/* Dark mode persistence */
+/* Dark mode */
 if (localStorage.getItem("dark") === "true") {
   document.body.classList.add("dark");
   darkToggle.textContent = "☀️";
@@ -44,7 +44,7 @@ checkBtn.onclick = () => {
   });
 };
 
-/* Location */
+/* Location (City, Country) */
 function fetchLocation(lat, lon) {
   fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}`)
     .then(r => r.json())
@@ -54,7 +54,7 @@ function fetchLocation(lat, lon) {
     });
 }
 
-/* Weather */
+/* Weather + Time */
 function fetchWeather(lat, lon) {
   fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,wind_speed_10m&current_weather=true&timezone=auto`)
     .then(r => r.json())
@@ -69,7 +69,16 @@ function showWeather(data) {
   windEl.textContent = h.wind_speed_10m[0];
   rainEl.textContent = h.precipitation_probability[0];
 
-  timeText.textContent = `Local time: ${data.current_weather.time}`;
+  /* Proper local time formatting with timezone */
+  const localDate = new Date(data.current_weather.time);
+  const formattedTime = new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZoneName: "short"
+  }).format(localDate);
+
+  timeText.textContent = `Local time: ${formattedTime}`;
 
   hourlyEl.innerHTML = "";
   for (let i = 1; i <= 2; i++) {
@@ -101,7 +110,7 @@ function showWeather(data) {
   resultBox.classList.remove("hidden");
 }
 
-/* AQI */
+/* AQI (Global) */
 function fetchAQI(lat, lon) {
   fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=us_aqi,european_aqi`)
     .then(r => r.json())
