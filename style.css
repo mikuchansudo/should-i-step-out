@@ -4,7 +4,6 @@
   --text: #000;
   --muted: #555;
   --primary: #2563eb;
-  --success: #10b981;
 }
 
 body.dark {
@@ -32,17 +31,17 @@ body {
 .app {
   position: relative;
   background: var(--card);
-  max-width: 400px;
+  max-width: 420px;
   width: 100%;
-  padding: 24px;
+  padding: 48px 24px 24px; /* TOP PADDING FIX */
   border-radius: 14px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
 .dark-toggle {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   background: none;
   border: none;
   font-size: 20px;
@@ -50,8 +49,8 @@ body {
 }
 
 .subtitle {
-  font-size: 14px;
   color: var(--muted);
+  font-size: 14px;
   margin-bottom: 18px;
 }
 
@@ -61,7 +60,7 @@ button {
   border-radius: 8px;
   border: none;
   background: var(--primary);
-  color: #fff;
+  color: white;
   font-size: 16px;
   cursor: pointer;
 }
@@ -71,13 +70,13 @@ button {
 }
 
 .location-time {
-  margin-top: 15px;
+  margin-top: 12px;
   font-size: 13px;
   color: var(--muted);
 }
 
 .metrics {
-  margin-top: 15px;
+  margin-top: 14px;
   display: grid;
   gap: 8px;
 }
@@ -85,30 +84,24 @@ button {
 .metrics div {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
 }
 
 .next-hours {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 #hourly div {
   font-size: 13px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .advice {
-  margin-top: 15px;
+  margin-top: 14px;
   font-weight: 500;
 }
 
-.share {
-  margin-top: 15px;
-  background: var(--success);
-}
-
 .donation {
-  margin-top: 25px;
+  margin-top: 24px;
   text-align: center;
 }
 
