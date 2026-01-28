@@ -1,8 +1,8 @@
 :root {
   --bg: #f4f6fb;
   --card: #ffffff;
-  --text: #000000;
-  --muted: #666;
+  --text: #000;
+  --muted: #555;
   --primary: #2563eb;
   --success: #10b981;
 }
@@ -22,14 +22,15 @@ body.dark {
 body {
   margin: 0;
   background: var(--bg);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   color: var(--text);
 }
 
 .app {
+  position: relative;
   background: var(--card);
   max-width: 380px;
   width: 100%;
@@ -38,25 +39,33 @@ body {
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.dark-toggle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+h1 {
+  margin-top: 0;
 }
 
 .subtitle {
-  font-size: 14px;
   color: var(--muted);
+  font-size: 14px;
   margin-bottom: 20px;
 }
 
 button {
   width: 100%;
   padding: 14px;
-  border: none;
   border-radius: 8px;
+  border: none;
   background: var(--primary);
-  color: white;
+  color: #fff;
   font-size: 16px;
   cursor: pointer;
 }
@@ -70,16 +79,19 @@ button {
 }
 
 .metrics {
+  margin-top: 15px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 10px;
   font-size: 14px;
-  margin-top: 15px;
+}
+
+.metrics div {
+  display: flex;
+  justify-content: space-between;
 }
 
 .advice {
   margin-top: 15px;
-  font-size: 15px;
   font-weight: 500;
 }
 
@@ -107,11 +119,4 @@ button {
 
 .bmc-button img {
   height: 22px;
-}
-
-#darkToggle {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
 }
