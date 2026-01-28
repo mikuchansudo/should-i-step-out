@@ -3,54 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Should I Step Out?</title>
+  <title>Should I step out right now?</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="app">
-    <div class="top-bar">
-      <h1>Should I step out right now?</h1>
-      <button id="darkToggle" title="Toggle dark mode">🌙</button>
-    </div>
+    <button id="darkToggle" class="dark-toggle" aria-label="Toggle dark mode">
+      🌙
+    </button>
+
+    <h1>Should I step out right now?</h1>
 
     <p class="subtitle">A simple decision, not a weather dashboard</p>
 
     <button id="checkBtn">Check now</button>
 
-    <p id="status" class="status hidden">Checking…</p>
+    <p id="status" class="status hidden">Checking conditions…</p>
 
     <div id="result" class="hidden">
       <h2 id="decision"></h2>
       <p id="details"></p>
 
       <div class="metrics">
-        <div>🌡 <span id="temp"></span>°C</div>
-        <div>💧 <span id="humidity"></span>% humidity</div>
-        <div>🌬 <span id="wind"></span> km/h wind</div>
-        <div>🌧 <span id="rain"></span>% rain chance</div>
-        <div>🫁 AQI: <span id="aqi"></span></div>
+        <div><span>🌡 Temperature</span><strong><span id="temp"></span> °C</strong></div>
+        <div><span>💧 Humidity</span><strong><span id="humidity"></span> %</strong></div>
+        <div><span>🌬 Wind</span><strong><span id="wind"></span> km/h</strong></div>
+        <div><span>🌧 Rain chance</span><strong><span id="rain"></span> %</strong></div>
+        <div><span>🫁 Air quality (AQI)</span><strong><span id="aqi"></span></strong></div>
       </div>
 
-      <div class="advice" id="advice"></div>
+      <div id="advice" class="advice"></div>
 
       <button id="shareBtn" class="share hidden">Share today’s result</button>
     </div>
 
     <div class="donation">
-      <p class="donation-line">
-        If this helped you decide today, you can support this project.
-      </p>
+      <p>If this helped you decide today, you can support this project.</p>
 
-      <a
-        class="bmc-button"
-        href="https://buymeacoffee.com/tokyoisliff"
-        target="_blank"
-      >
-        <img
-          src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-          alt="Buy Me a Coffee"
-        />
+      <a class="bmc-button"
+         href="https://buymeacoffee.com/tokyoisliff"
+         target="_blank"
+         rel="noopener">
+        <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="">
         <span>Buy me a coffee</span>
       </a>
     </div>
