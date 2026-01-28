@@ -42,9 +42,9 @@ checkBtn.onclick = () => {
   navigator.geolocation.getCurrentPosition(
     pos => {
       const { latitude, longitude } = pos.coords;
+      fetchLocation(latitude, longitude);
       fetchWeather(latitude, longitude);
       fetchAQI(latitude, longitude);
-      fetchLocation(latitude, longitude);
     },
     () => {
       statusText.textContent = "Location permission denied.";
@@ -52,60 +52,23 @@ checkBtn.onclick = () => {
   );
 };
 
-/* ---------- LOCATION (ROBUST) ---------- */
+/* ---------- LOCATION (FRONTEND SAFE) ---------- */
 
 function fetchLocation(lat, lon) {
-  // Try Open-Meteo first
-  fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&language=en`)
-    .then(r => r.json())
-    .then(d => {
-      const p = d.results?.[0];
-      if (p) {
-        const place =
-          p.city ||
-          p.town ||
-          p.village ||
-          p.name ||
-          p.administrative_area;
-        if (place) {
-          locationText.textContent = `${place}, ${p.country}`;
-          return;
-        }
-      }
-      // Fallback if Open-Meteo gives nothing
-      fetchLocationFallback(lat, lon);
-    })
-    .catch(() => {
-      fetchLocationFallback(lat, lon);
-    });
-}
-
-/* ---------- FALLBACK: OpenStreetMap ---------- */
-
-function fetchLocationFallback(lat, lon) {
   fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`,
-    {
-      headers: {
-        "User-Agent": "should-i-step-out/1.0 (contact: buymeacoffee.com/tokyoisliff)"
-      }
-    }
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
   )
     .then(r => r.json())
     .then(d => {
-      const a = d.address || {};
       const city =
-        a.city ||
-        a.town ||
-        a.village ||
-        a.suburb ||
-        a.county;
-      const country = a.country;
-      if (city && country) {
-        locationText.textContent = `${city}, ${country}`;
-      } else {
-        locationText.textContent = "Location unavailable";
-      }
+        d.city ||
+        d.locality ||
+        d.principalSubdivision ||
+        "Unknown place";
+
+      const country = d.countryName || "";
+
+      locationText.textContent = `${city}, ${country}`;
     })
     .catch(() => {
       locationText.textContent = "Location unavailable";
