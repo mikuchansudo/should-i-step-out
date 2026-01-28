@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Should I step out right now?</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="app">
-  <button id="darkToggle" class="dark-toggle" aria-label="Toggle dark mode">🌙</button>
+  <!-- Dark mode toggle -->
+  <button id="darkToggle" class="dark-toggle" title="Toggle dark mode">🌙</button>
 
   <h1>Should I step out right now?</h1>
   <p class="subtitle">A simple decision, not a weather dashboard</p>
@@ -21,8 +22,8 @@
   <div id="result" class="hidden">
 
     <div class="location-time">
-      <strong id="location"></strong><br>
-      <span id="localTime"></span>
+      <strong id="locationText"></strong><br>
+      <span id="timeText"></span>
     </div>
 
     <h2 id="decision"></h2>
@@ -42,8 +43,6 @@
     </div>
 
     <div id="advice" class="advice"></div>
-
-    <button id="shareBtn" class="share hidden">Share today’s result</button>
   </div>
 
   <div class="donation">
